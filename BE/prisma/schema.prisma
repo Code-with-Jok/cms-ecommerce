@@ -7,8 +7,30 @@ datasource db {
   provider  = "postgresql"
 }
 
-model Product{
+
+model Category{
+  id Int @id @default(autoincrement())
+  name String
+  slug String
+  cretedAt DateTime @default(now())
+  updateAt DateTime @updatedAt
+  isActive Boolean @default(true)
+  isDeleted Boolean @default(false)
+
+  products Products[]
+
+}
+
+model Products{
   id Int @id @default(autoincrement())
   name String
   description String
+  slug String
+  cretedAt DateTime @default(now())
+  updateAt DateTime @updatedAt
+  isActive Boolean @default(true)
+  isDeleted Boolean @default(false)
+
+  categoryId Int
+  category Category @relation(fields: [categoryId], references: [id], onDelete: Cascade)
 }
